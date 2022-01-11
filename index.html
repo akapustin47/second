@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Subtraction</title>
+  <title>Division</title>
   <style>body { padding: 0; margin: 0; }</style>
 </head>
 
@@ -5241,12 +5241,12 @@ var $elm$core$Task$perform = F2(
 				A2($elm$core$Task$map, toMessage, task)));
 	});
 var $elm$browser$Browser$element = _Browser_element;
-var $author$project$Subtraction$Model = F8(
+var $author$project$Division$Model = F8(
 	function (userInput, task, correctAnswers, wrongAnswers, zone, time, counterTicks, totalTicks) {
 		return {correctAnswers: correctAnswers, counterTicks: counterTicks, task: task, time: time, totalTicks: totalTicks, userInput: userInput, wrongAnswers: wrongAnswers, zone: zone};
 	});
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
-var $author$project$Subtraction$AdjustTimeZone = function (a) {
+var $author$project$Division$AdjustTimeZone = function (a) {
 	return {$: 'AdjustTimeZone', a: a};
 };
 var $elm$time$Time$Name = function (a) {
@@ -5261,7 +5261,7 @@ var $elm$time$Time$Zone = F2(
 	});
 var $elm$time$Time$customZone = $elm$time$Time$Zone;
 var $elm$time$Time$here = _Time_here(_Utils_Tuple0);
-var $author$project$Subtraction$NewTask = function (a) {
+var $author$project$Division$NewTask = function (a) {
 	return {$: 'NewTask', a: a};
 };
 var $elm$random$Random$Generate = function (a) {
@@ -5430,21 +5430,21 @@ var $elm$random$Random$pair = F2(
 			genA,
 			genB);
 	});
-var $author$project$Subtraction$toNumbers = A2(
+var $author$project$Division$toNumbers = A2(
 	$elm$random$Random$pair,
-	A2($elm$random$Random$int, 125, 999),
-	A2($elm$random$Random$int, 125, 999));
-var $author$project$Subtraction$newTaskCmd = A2($elm$random$Random$generate, $author$project$Subtraction$NewTask, $author$project$Subtraction$toNumbers);
-var $author$project$Subtraction$initialCommands = _List_fromArray(
+	A2($elm$random$Random$int, 0, 1000),
+	A2($elm$random$Random$int, 1, 100));
+var $author$project$Division$newTaskCmd = A2($elm$random$Random$generate, $author$project$Division$NewTask, $author$project$Division$toNumbers);
+var $author$project$Division$initialCommands = _List_fromArray(
 	[
-		$author$project$Subtraction$newTaskCmd,
-		A2($elm$core$Task$perform, $author$project$Subtraction$AdjustTimeZone, $elm$time$Time$here)
+		$author$project$Division$newTaskCmd,
+		A2($elm$core$Task$perform, $author$project$Division$AdjustTimeZone, $elm$time$Time$here)
 	]);
 var $elm$time$Time$utc = A2($elm$time$Time$Zone, 0, _List_Nil);
-var $author$project$Subtraction$init = function (_v0) {
+var $author$project$Division$init = function (_v0) {
 	return _Utils_Tuple2(
 		A8(
-			$author$project$Subtraction$Model,
+			$author$project$Division$Model,
 			'',
 			_Utils_Tuple2(0, 0),
 			0,
@@ -5453,9 +5453,9 @@ var $author$project$Subtraction$init = function (_v0) {
 			$elm$time$Time$millisToPosix(0),
 			0,
 			0),
-		$elm$core$Platform$Cmd$batch($author$project$Subtraction$initialCommands));
+		$elm$core$Platform$Cmd$batch($author$project$Division$initialCommands));
 };
-var $author$project$Subtraction$Tick = function (a) {
+var $author$project$Division$Tick = function (a) {
 	return {$: 'Tick', a: a};
 };
 var $elm$time$Time$Every = F2(
@@ -5857,11 +5857,11 @@ var $elm$time$Time$every = F2(
 		return $elm$time$Time$subscription(
 			A2($elm$time$Time$Every, interval, tagger));
 	});
-var $author$project$Subtraction$subscriptions = function (model) {
-	return A2($elm$time$Time$every, 1000, $author$project$Subtraction$Tick);
+var $author$project$Division$subscriptions = function (model) {
+	return A2($elm$time$Time$every, 1000, $author$project$Division$Tick);
 };
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
-var $author$project$Subtraction$resetUserInput = function (model) {
+var $author$project$Division$resetUserInput = function (model) {
 	return _Utils_update(
 		model,
 		{counterTicks: 0, userInput: ''});
@@ -5870,31 +5870,31 @@ var $elm$core$Tuple$second = function (_v0) {
 	var y = _v0.b;
 	return y;
 };
-var $author$project$Subtraction$checkResult = F2(
+var $author$project$Division$checkResult = F2(
 	function (task, userInput) {
 		var _v0 = $elm$core$String$toInt(userInput);
 		if (_v0.$ === 'Just') {
 			var number = _v0.a;
-			return _Utils_eq(task.a - task.b, number) ? true : false;
+			return _Utils_eq((task.a / task.b) | 0, number) ? true : false;
 		} else {
 			return false;
 		}
 	});
-var $author$project$Subtraction$updateScore = function (model) {
-	return A2($author$project$Subtraction$checkResult, model.task, model.userInput) ? _Utils_update(
+var $author$project$Division$updateScore = function (model) {
+	return A2($author$project$Division$checkResult, model.task, model.userInput) ? _Utils_update(
 		model,
 		{correctAnswers: model.correctAnswers + 1}) : _Utils_update(
 		model,
 		{wrongAnswers: model.wrongAnswers + 1});
 };
-var $author$project$Subtraction$update = F2(
+var $author$project$Division$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
 			case 'Ready':
 				return _Utils_Tuple2(
-					$author$project$Subtraction$resetUserInput(
-						$author$project$Subtraction$updateScore(model)),
-					$author$project$Subtraction$newTaskCmd);
+					$author$project$Division$resetUserInput(
+						$author$project$Division$updateScore(model)),
+					$author$project$Division$newTaskCmd);
 			case 'NewTask':
 				var newTask = msg.a;
 				return _Utils_Tuple2(
@@ -5912,9 +5912,9 @@ var $author$project$Subtraction$update = F2(
 			case 'KeyDown':
 				var key = msg.a;
 				return (key === 13) ? _Utils_Tuple2(
-					$author$project$Subtraction$resetUserInput(
-						$author$project$Subtraction$updateScore(model)),
-					$author$project$Subtraction$newTaskCmd) : _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+					$author$project$Division$resetUserInput(
+						$author$project$Division$updateScore(model)),
+					$author$project$Division$newTaskCmd) : _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 			case 'Tick':
 				var newTime = msg.a;
 				return _Utils_Tuple2(
@@ -5931,13 +5931,13 @@ var $author$project$Subtraction$update = F2(
 					$elm$core$Platform$Cmd$none);
 		}
 	});
-var $author$project$Subtraction$Change = function (a) {
+var $author$project$Division$Change = function (a) {
 	return {$: 'Change', a: a};
 };
-var $author$project$Subtraction$KeyDown = function (a) {
+var $author$project$Division$KeyDown = function (a) {
 	return {$: 'KeyDown', a: a};
 };
-var $author$project$Subtraction$Ready = {$: 'Ready'};
+var $author$project$Division$Ready = {$: 'Ready'};
 var $elm$html$Html$button = _VirtualDom_node('button');
 var $elm$html$Html$div = _VirtualDom_node('div');
 var $elm$html$Html$h1 = _VirtualDom_node('h1');
@@ -5994,7 +5994,7 @@ var $elm$html$Html$Events$onInput = function (tagger) {
 };
 var $elm$json$Json$Decode$int = _Json_decodeInt;
 var $elm$html$Html$Events$keyCode = A2($elm$json$Json$Decode$field, 'keyCode', $elm$json$Json$Decode$int);
-var $author$project$Subtraction$onKeyDown = function (tagger) {
+var $author$project$Division$onKeyDown = function (tagger) {
 	return A2(
 		$elm$html$Html$Events$on,
 		'keydown',
@@ -6009,7 +6009,7 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 			$elm$json$Json$Encode$string(string));
 	});
 var $elm$html$Html$Attributes$placeholder = $elm$html$Html$Attributes$stringProperty('placeholder');
-var $author$project$Subtraction$printNumberPair = function (_v0) {
+var $author$project$Division$printNumberPair = function (_v0) {
 	var x = _v0.a;
 	var y = _v0.b;
 	return $elm$core$String$fromInt(x) + (', ' + $elm$core$String$fromInt(y));
@@ -6085,7 +6085,7 @@ var $elm$time$Time$toSecond = F2(
 				1000));
 	});
 var $elm$html$Html$Attributes$value = $elm$html$Html$Attributes$stringProperty('value');
-var $author$project$Subtraction$view = function (model) {
+var $author$project$Division$view = function (model) {
 	return A2(
 		$elm$html$Html$div,
 		_List_Nil,
@@ -6097,7 +6097,7 @@ var $author$project$Subtraction$view = function (model) {
 				_List_fromArray(
 					[
 						$elm$html$Html$text(
-						$author$project$Subtraction$printNumberPair(model.task))
+						$author$project$Division$printNumberPair(model.task))
 					])),
 				A2(
 				$elm$html$Html$input,
@@ -6105,15 +6105,15 @@ var $author$project$Subtraction$view = function (model) {
 					[
 						$elm$html$Html$Attributes$placeholder('Введи результат'),
 						$elm$html$Html$Attributes$value(model.userInput),
-						$elm$html$Html$Events$onInput($author$project$Subtraction$Change),
-						$author$project$Subtraction$onKeyDown($author$project$Subtraction$KeyDown)
+						$elm$html$Html$Events$onInput($author$project$Division$Change),
+						$author$project$Division$onKeyDown($author$project$Division$KeyDown)
 					]),
 				_List_Nil),
 				A2(
 				$elm$html$Html$button,
 				_List_fromArray(
 					[
-						$elm$html$Html$Events$onClick($author$project$Subtraction$Ready)
+						$elm$html$Html$Events$onClick($author$project$Division$Ready)
 					]),
 				_List_fromArray(
 					[
@@ -6182,12 +6182,12 @@ var $author$project$Subtraction$view = function (model) {
 			}()
 			]));
 };
-var $author$project$Subtraction$main = $elm$browser$Browser$element(
-	{init: $author$project$Subtraction$init, subscriptions: $author$project$Subtraction$subscriptions, update: $author$project$Subtraction$update, view: $author$project$Subtraction$view});
-_Platform_export({'Subtraction':{'init':$author$project$Subtraction$main(
+var $author$project$Division$main = $elm$browser$Browser$element(
+	{init: $author$project$Division$init, subscriptions: $author$project$Division$subscriptions, update: $author$project$Division$update, view: $author$project$Division$view});
+_Platform_export({'Division':{'init':$author$project$Division$main(
 	$elm$json$Json$Decode$succeed(_Utils_Tuple0))(0)}});}(this));
 
-  var app = Elm.Subtraction.init({ node: document.getElementById("elm") });
+  var app = Elm.Division.init({ node: document.getElementById("elm") });
 }
 catch (e)
 {
